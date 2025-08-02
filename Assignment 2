@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Greeting App',
+      home: const GreetingScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class GreetingScreen extends StatelessWidget {
+  const GreetingScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Greeting App'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+
+            // 1. "Hello, World!" with custom styling
+            const Text(
+              'Hello, World!',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            // 1. Additional text
+            const Text(
+              'Welcome to Flutter!',
+              style: TextStyle(fontSize: 18),
+            ),
+
+            const SizedBox(height: 20),
+
+            // 2. Image from the internet
+            Image.network(
+              'https://flutter.dev/assets/homepage/carousel/slide_1-layer_0-2b4fb70ab946a0d9e964b5cfbe1c26c7b5ec2b3ac06f8f6e74b03c5b5e7f5c4e.png',
+              height: 150,
+            ),
+
+            const SizedBox(height: 20),
+
+            // 3. Interactive Button
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green, // 4. Button color
+              ),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Button Pressed!'),
+                  ),
+                );
+              },
+              child: const Text('Press Me'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
