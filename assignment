@@ -1,0 +1,42 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../models/todo.dart';
+
+class ApiService {
+  final String baseUrl = "https://YOUR-TEACHER-API-ENDPOINT"; // Replace with given API
+
+  Future<List<Todo>> getTodos() async {
+    final response = await http.get(Uri.parse("$baseUrl/todos"));
+    if (response.statusCode == 200) {
+      final List data = jsonDecode(response.body);
+      return data.map((e) => Todo.fromJson(e)).toList();
+    } else {
+      throw Exception("Failed to load todos");
+    }
+  }
+
+  Future<Todo> addTodo(String title) async {
+    final response = await http.post(
+      Uri.parse("$baseUrl/todos"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({"title": title, "completed": false}),
+    );
+    if (response.statusCode == 201) {
+      return Todo.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception("Failed to add todo");
+    }
+  }
+
+  Future<void> updateTodo(Todo todo) async {
+    await http.put(
+      Uri.parse("$baseUrl/todos/${todo.id}"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(todo.toJson()),
+    );
+  }
+
+  Future<void> deleteTodo(int id) async {
+    await http.delete(Uri.parse("$baseUrl/todos/$id"));
+  }
+}
