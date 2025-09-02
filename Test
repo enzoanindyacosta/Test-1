@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+
+class RecipeListScreen extends StatelessWidget {
+  final List<Recipe> recipes = parseRecipes();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Food Recipes")),
+      body: ListView.builder(
+        itemCount: recipes.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(recipes[index].title),
+            subtitle: Text("Time: ${recipes[index].time}"),
+          );
+        },
+      ),
+    );
+  }
+}
